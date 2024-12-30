@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiliate Link Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .actions {
+            margin-top: 10px;
+        }
+
+        .actions button {
+            margin-right: 5px;
+            background: #28a745;
+        }
+
+        .actions button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Affiliate Link Converter</h1>
+        <input type="text" id="inputUrl" placeholder="Enter your URL here">
+        <button onclick="convertLink()">Convert URL</button>
+        <div class="result" id="resultContainer">
+            <p id="convertedUrl"></p>
+            <div class="actions">
+                <button onclick="copyLink()">Copy</button>
+                <button onclick="shareLink()">Share</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Define affiliate parameters
+        const affiliateId = "e*IPzE43Ui8";
+        const midValue = "39197";
+        const siteId = "e*IPzE43Ui8";
+
+        // Function to convert URL to affiliate link
+        function convertLink() {
+            const inputUrl = document.getElementById('inputUrl').value.trim();
+
+            if (!inputUrl) {
+                alert("Please enter a valid URL.");
+                return;
+            }
+
+            const encodedUrl = encodeURIComponent(inputUrl);
+            const affiliateLink = `${inputUrl}?ranMID=${midValue}&ranEAID=${affiliateId}&ranSiteID=${siteId}&LSNPUBID=${affiliateId}&utm_source=aff-campaign&utm_medium=udemyads`;
+
+            // Display the result
+            const resultContainer = document.getElementById('resultContainer');
+            const convertedUrlElement = document.getElementById('convertedUrl');
+            convertedUrlElement.textContent = affiliateLink;
+            convertedUrlElement.style.wordBreak = "break-word";
+            resultContainer.style.display = "block";
+        }
+
+        // Copy to clipboard function
+        function copyLink() {
+            const convertedUrl = document.getElementById('convertedUrl').textContent;
+
+            navigator.clipboard.writeText(convertedUrl).then(() => {
+                alert("Affiliate link copied to clipboard!");
+            }).catch(err => {
+                console.error("Failed to copy link: ", err);
+            });
+        }
+
+        // Share link function
+        function shareLink() {
+            const convertedUrl = document.getElementById('convertedUrl').textContent;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: "Affiliate Link",
+                    text: "Check out this affiliate link!",
+                    url: convertedUrl
+                }).then(() => {
+                    console.log("Link shared successfully!");
+                }).catch(err => {
+                    console.error("Failed to share link: ", err);
+                });
+            } else {
+                alert("Sharing is not supported on your browser. Please copy the link instead.");
+            }
+        }
+    </script>
+</body>
+</html>
